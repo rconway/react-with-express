@@ -3,6 +3,9 @@ var router = express.Router();
 
 var counter = 1;
 
+var users = [];
+
+/*
 var users = [
     {
         id: counter++, name: "fred", age: 23
@@ -17,6 +20,7 @@ var users = [
         id: counter++, name: "burt", age: 78
     }
 ];
+*/
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
