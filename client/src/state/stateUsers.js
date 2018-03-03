@@ -9,9 +9,9 @@ function sortUsers(users) {
 export const reduceStateUsers = function(state = [], action) {
   switch (action.type) {
     case ACTIONS.SET_USERS:
-      return sortUsers( action.users );
+      return sortUsers(action.users);
     case ACTIONS.ADD_USER:
-      return sortUsers( action.users.slice().push(action.user) );
+      return sortUsers(action.users.slice().push(action.user));
     default:
       return state;
   }
