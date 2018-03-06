@@ -1,19 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { actionSetUsers } from "../actions/actions";
+import { actionFetchUsers, actionSetUsers } from "../actions/actions";
 import AddUserForm from "../components/AddUserForm";
-
-function fetchUsers() {
-  var p = new Promise(function(resolve, reject) {
-    fetch("/users").then(function(response) {
-      return response.json();
-    }).then(function(users) {
-      resolve(users);
-    });
-  });
-  return p;
-}
 
 class UserList extends Component {
   constructor(props) {
@@ -25,10 +14,7 @@ class UserList extends Component {
   componentDidMount() {
     if (!this.props.users || this.props.users.length === 0) {
       var self = this;
-      /* global fetch */
-      fetchUsers().then(function(users) {
-        self.props.setUsers(users);
-      });
+      self.props.fetchUsers();
     }
   }
 
@@ -85,6 +71,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchUsers: function() {
+      dispatch(actionFetchUsers());
+    },
     setUsers: function(users) {
       dispatch(actionSetUsers(users));
     }
