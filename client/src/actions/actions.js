@@ -1,5 +1,4 @@
 export const ACTIONS = {
-  FETCH_USERS: "FETCH_USERS",
   SET_USERS: "SET_USERS",
   ADD_USER: "ADD_USER"
 }
@@ -20,14 +19,37 @@ export function actionAddUser(user) {
 
 export function actionFetchUsers() {
   /* global fetch */
-  // async fetch with Promise
-  var userFetchPromise = fetch("/users")
-    .then(function(response) {
-      return response.json();
-    });
-    // FSA action with Promise as payload
-  return {
-    type: ACTIONS.FETCH_USERS,
-    payload: userFetchPromise
-  };
+  return function(dispatch, getState) {
+    console.log("zzz actionFetchUsers zzz");
+    fetch("/users")
+      .then(function(response) {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(function(users) {
+        dispatch(actionSetUsers(users));
+      });
+  }
+}
+
+export function actionSubmitAddUser(user) {
+  return function(dispatch, getState) {
+    console.log("zzz actionAddUser zzz");
+    fetch("/users/add", {
+      method: "post",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(user)
+    })
+      .then(function(response) {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(function(newUser) {
+        dispatch(actionAddUser(newUser));
+      });
+  }
 }

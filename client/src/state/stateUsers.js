@@ -8,12 +8,12 @@ function sortUsers(users) {
 
 export const reduceStateUsers = function(state = [], action) {
   switch (action.type) {
-    case ACTIONS.FETCH_USERS:
-      return sortUsers(action.payload);
     case ACTIONS.SET_USERS:
       return sortUsers(action.payload);
     case ACTIONS.ADD_USER:
-      return sortUsers(state.slice().push(action.payload));
+      var users = state.slice();
+      users.push(action.payload);
+      return sortUsers(users);
     default:
       return state;
   }

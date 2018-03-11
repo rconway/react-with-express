@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { actionFetchUsers, actionSetUsers } from "../actions/actions";
+import { actionFetchUsers, actionSubmitAddUser } from "../actions/actions";
 import AddUserForm from "../components/AddUserForm";
 
 class UserList extends Component {
   constructor(props) {
     super(props);
-
-    this.handleAddUser = this.handleAddUser.bind(this);
   }
 
   componentDidMount() {
@@ -16,22 +14,6 @@ class UserList extends Component {
       var self = this;
       self.props.fetchUsers();
     }
-  }
-
-  handleAddUser(user) {
-    var self = this;
-    var postData = user;
-    fetch("/users/add", {
-      method: "post",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify(postData)
-    }).then(function(response) {
-      return response.json();
-    }).then(function(users) {
-      self.props.setUsers(users);
-    });
   }
 
   render() {
@@ -49,7 +31,7 @@ class UserList extends Component {
     return (
       <div>
         ...User List here...
-        <AddUserForm onSubmit={this.handleAddUser} />
+        <AddUserForm onSubmit={this.props.addUser} />
         <hr/>
         { userList && userList.length>0 ? (
           <ul>
@@ -74,8 +56,8 @@ function mapDispatchToProps(dispatch) {
     fetchUsers: function() {
       dispatch(actionFetchUsers());
     },
-    setUsers: function(users) {
-      dispatch(actionSetUsers(users));
+    addUser: function(user) {
+      dispatch(actionSubmitAddUser(user));
     }
   }
 }
