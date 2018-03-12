@@ -20,7 +20,6 @@ export function actionAddUser(user) {
 export function actionFetchUsers() {
   /* global fetch */
   return function(dispatch, getState) {
-    console.log("zzz actionFetchUsers zzz");
     fetch("/users")
       .then(function(response) {
         if (response.ok) {
@@ -35,7 +34,6 @@ export function actionFetchUsers() {
 
 export function actionSubmitAddUser(user) {
   return function(dispatch, getState) {
-    console.log("zzz actionAddUser zzz");
     fetch("/users/add", {
       method: "post",
       headers: {

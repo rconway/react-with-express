@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { actionFetchUsers, actionSubmitAddUser } from "../actions/actions";
+import * as Actions from "../actions/actions";
 import AddUserForm from "../components/AddUserForm";
 
+import "./UserList.css";
+
 class UserList extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     if (!this.props.users || this.props.users.length === 0) {
@@ -25,18 +24,32 @@ class UserList extends Component {
       })
       // Output as list items.
       userList = userList.map(function(user) {
-        return <li key={user.id}>{user.name} : {user.age}</li>;
+        return (
+          <tr key={user.id}>
+            <td className="user-list-name">{user.name}</td>
+            <td className="user-list-age">{user.age}</td>
+          </tr>
+        );
       });
     }
     return (
       <div>
-        ...User List here...
         <AddUserForm onSubmit={this.props.addUser} />
         <hr/>
         { userList && userList.length>0 ? (
-          <ul>
-            {userList}
-          </ul>
+          <div className="user-list">
+            <table className="table table-sm table-bordered table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col" className="user-list-name">Name</th>
+                  <th scope="col" className="user-list-age">Age</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userList}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <div>Loading users...</div>
         )}
@@ -54,10 +67,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUsers: function() {
-      dispatch(actionFetchUsers());
+      dispatch(Actions.actionFetchUsers());
     },
     addUser: function(user) {
-      dispatch(actionSubmitAddUser(user));
+      dispatch(Actions.actionSubmitAddUser(user));
     }
   }
 }

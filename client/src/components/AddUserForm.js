@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "./AddUserForm.css";
+
 class AddUserForm extends Component {
   constructor(props) {
     super(props);
@@ -40,24 +42,32 @@ class AddUserForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <p>Add user...</p>
-        <label>Name:
-          <input name="name" type="text"
-            value={this.state.form.name}
-            onChange={this.handleNameChange}
-            placeholder="enter name here"
-          />
-        </label>
-        <label>Age:
-          <input name="age" type="number"
-            value={this.state.form.age}
-            onChange={this.handleAgeChange}
-            placeholder="enter age here"
-          />
-        </label>
-        <button type="submit">Add</button>
-      </form>
+      <div className="user-form">
+        <div className="user-form-title">Add a NEW user...</div>
+        <form onSubmit={this.handleSubmit} className="form-inline">
+          <div className="form-group form-inline">
+            <label>Name
+              <input name="name" type="text"
+                value={this.state.form.name}
+                onChange={this.handleNameChange}
+                placeholder="enter name here"
+                className="form-control"
+              />
+            </label>
+          </div>
+          <div className="form-group form-inline">
+            <label>Age
+              <input name="age" type="number"
+                value={this.state.form.age}
+                onChange={this.handleAgeChange}
+                placeholder="enter age here"
+                className="form-control"
+              />
+            </label>
+          </div>
+          <button type="submit" className="btn btn-primary">Add</button>
+        </form>
+      </div>
     );
   }
 }

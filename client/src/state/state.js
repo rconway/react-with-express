@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware  } from "redux";
+import * as Redux from "redux";
 import reduxThunk from "redux-thunk";
 //import reduxPromise from "redux-promise";
 
@@ -16,6 +16,6 @@ const reduceState = function(state = {}, action) {
 // redux-promise : for actions returning promises as payload (FSA actions)
 
 //export const store = createStore( reduceState, applyMiddleware(reduxThunk, reduxPromise) );
-export const store = createStore( reduceState, applyMiddleware(reduxThunk) );
+export const store = Redux.createStore( reduceState, Redux.applyMiddleware(reduxThunk) );
 
 export default store;
